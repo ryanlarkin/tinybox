@@ -194,6 +194,7 @@
 		"brick_explosive": "Explosive",
 		"brick_activator": "Activator",
 		"brick_magnet": "Magnet",
+		"brick_power_supply": "Power Cell",
 
 		"tooltips": {
 			"obj_pine_tree": "Regular size pine tree.",
@@ -237,6 +238,7 @@
 			"brick_explosive": "Explodes when a button attached to it is pressed or it is hit by a bomb, rocket, etc.",
 			"brick_activator": "Activates (releases) the brick group it is attached to, making it susceptible to gravity.\nAlso allows vehicles to auto-drive with set steering and acceleration, or to follow the nearest player.\nThis can be used in many ways, from making autonomous vehicles to ferris wheels and moving platforms.",
 			"brick_magnet": "A magnet. Will activate (release) the brick group it is attached to.",
+			"brick_power_supply": "A constant source of power for any connected bricks.",
 		}
 	},
 	"songs": {

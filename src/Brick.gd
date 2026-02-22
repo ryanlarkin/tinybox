@@ -905,3 +905,40 @@ func properties_as_dict() -> Dictionary:
 		dict[p] = get(p)
 	dict["freeze"] = freeze
 	return dict
+
+func is_conductive() -> bool:
+	match _material:
+		BrickMaterial.METAL:
+			return true
+		_:
+			return false
+
+func is_transmiting_power(visited : Dictionary) -> bool:
+	if visited.has(self):
+		return false
+	visited[self] = null
+	
+	if !is_conductive():
+		return false
+	
+	for brick : Node in joint_detector.get_overlapping_bodies():
+		if brick is not Brick:
+			continue
+		
+		if brick.is_transmiting_power(visited):
+			return true
+	return false
+
+func is_powered() -> bool:
+	var visited : Dictionary = {}
+	
+	if is_transmiting_power(visited):
+		return true
+	
+	for brick : Node in joint_detector.get_overlapping_bodies():
+		if brick is not Brick:
+			continue
+		
+		if brick.is_transmiting_power(visited):
+			return true
+	return false

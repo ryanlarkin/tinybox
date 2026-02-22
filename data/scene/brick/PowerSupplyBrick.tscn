@@ -1,0 +1,93 @@
+[gd_scene format=3 uid="uid://e12ietdc506f"]
+
+[ext_resource type="Script" uid="uid://cw21vwy87wa40" path="res://src/PowerSupplyBrick.gd" id="1_c3ci7"]
+[ext_resource type="PackedScene" uid="uid://cr4led0sdhtx7" path="res://data/scene/brick/BrickMultiplayerSpawner.tscn" id="2_bxf0w"]
+[ext_resource type="PackedScene" uid="uid://cxb1urtfd3en" path="res://data/scene/brick/BrickSynchronizer.tscn" id="3_siyhw"]
+[ext_resource type="Script" uid="uid://bffar80lcasfa" path="res://addons/smoothing/smoothing.gd" id="4_iac6j"]
+[ext_resource type="PackedScene" uid="uid://bqu6sfv6my8qw" path="res://data/models/brick/brick.blend" id="5_3m2t1"]
+[ext_resource type="Texture2D" uid="uid://dyv6jyenlw37j" path="res://data/textures/power_source.png" id="6_c3ci7"]
+[ext_resource type="PackedScene" uid="uid://dwfrmjgcn6sg3" path="res://data/scene/fire/Fire.tscn" id="7_u1m6x"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_osnen"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_b80at"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_y551j"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_clbhc"]
+resource_name = "vincent.jacket"
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("6_c3ci7")
+roughness_texture_channel = 4
+normal_texture = SubResource("CompressedTexture2D_y551j")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_d6iny"]
+size = Vector3(0.9, 0.9, 0.9)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mtstk"]
+size = Vector3(1.4, 1.4, 1.4)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_w63pj"]
+size = Vector3(1.3, 1.3, 1.3)
+
+[node name="Brick" type="RigidBody3D" unique_id=1216819389]
+collision_mask = 3
+mass = 10.0
+physics_material_override = SubResource("PhysicsMaterial_osnen")
+freeze = true
+contact_monitor = true
+max_contacts_reported = 1
+script = ExtResource("1_c3ci7")
+
+[node name="BrickMultiplayerSpawner" parent="." unique_id=139918266 instance=ExtResource("2_bxf0w")]
+
+[node name="BrickSynchronizer" parent="." unique_id=1571224571 instance=ExtResource("3_siyhw")]
+
+[node name="collider" type="CollisionShape3D" parent="." unique_id=108825519]
+shape = SubResource("BoxShape3D_b80at")
+
+[node name="Smoothing" type="Node3D" parent="." unique_id=2017444834]
+script = ExtResource("4_iac6j")
+
+[node name="model" parent="Smoothing" unique_id=1962104379 instance=ExtResource("5_3m2t1")]
+
+[node name="Cube" parent="Smoothing/model" index="0" unique_id=1082907886]
+surface_material_override/0 = SubResource("StandardMaterial3D_clbhc")
+
+[node name="IntersectDetector" type="Area3D" parent="." unique_id=1568824093]
+collision_mask = 3
+
+[node name="collider" type="CollisionShape3D" parent="IntersectDetector" unique_id=6032765]
+shape = SubResource("BoxShape3D_d6iny")
+
+[node name="CameraMousePosInterceptor" type="StaticBody3D" parent="." unique_id=1683445645]
+collision_layer = 32
+collision_mask = 32
+
+[node name="collider" type="CollisionShape3D" parent="CameraMousePosInterceptor" unique_id=873453098]
+shape = SubResource("BoxShape3D_mtstk")
+disabled = true
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=276643083]
+max_distance = 70.0
+bus = &"SFX"
+
+[node name="SoundExpiration" type="Timer" parent="." unique_id=355344464]
+wait_time = 0.2
+one_shot = true
+
+[node name="InactivityTimer" type="Timer" parent="." unique_id=1325177160]
+wait_time = 15.0
+one_shot = true
+
+[node name="JointDetector" type="Area3D" parent="." unique_id=479706787]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5)
+collision_mask = 3
+
+[node name="collider" type="CollisionShape3D" parent="JointDetector" unique_id=1957155441]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
+shape = SubResource("BoxShape3D_w63pj")
+
+[node name="Fire" parent="." unique_id=1240812186 instance=ExtResource("7_u1m6x")]
+
+[editable path="Smoothing/model"]

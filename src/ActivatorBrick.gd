@@ -20,6 +20,7 @@ class_name ActivatorBrick
 var acceleration : int = 0
 var steering : int = 0
 var follow_nearby_player : bool = true
+var needs_power : bool = false
 
 # Set a custom property
 func set_property(property : StringName, value : Variant) -> void:
@@ -41,7 +42,7 @@ func set_colour(new : Color) -> void:
 
 func _init() -> void:
 	_brick_spawnable_type = "brick_activator"
-	properties_to_save = ["global_position", "global_rotation", "brick_scale", "immovable", "indestructible", "acceleration", "steering", "follow_nearby_player", "tag"]
+	properties_to_save = ["global_position", "global_rotation", "brick_scale", "immovable", "indestructible", "acceleration", "steering", "follow_nearby_player", "tag", "needs_power"]
 
 func _ready() -> void:
 	super()
@@ -72,6 +73,11 @@ func enter_state() -> void:
 
 func _physics_process(delta : float) -> void:
 	super(delta)
+	
+	if needs_power && !is_powered():
+		drive.rpc(0, 0, 0)
+		return
+	
 	if attached_motors.size() > 0:
 		if follow_nearby_player:
 			var nearest : RigidPlayer = null

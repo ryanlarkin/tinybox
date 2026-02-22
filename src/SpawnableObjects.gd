@@ -65,6 +65,7 @@ extends Node
 	"brick_activator": load("res://data/scene/brick/ActivatorBrick.tscn"),
 	"brick_magnet": load("res://data/scene/brick/MagnetBrick.tscn"),
 	"brick_cannon": load("res://data/scene/brick/CannonBrick.tscn"),
+	"brick_power_supply": load("res://data/scene/brick/PowerSupplyBrick.tscn"),
 }
 
 # Returns a list of items spawnable by the Editor.
