@@ -914,6 +914,9 @@ func is_conductive() -> bool:
 			return false
 
 func is_transmiting_power(visited : Dictionary) -> bool:
+	# Workaround for https://github.com/godotengine/godot/issues/74300
+	joint_detector.set_collision_layer_value(32, not joint_detector.get_collision_layer_value(32))
+	
 	if visited.has(self):
 		return false
 	visited[self] = null

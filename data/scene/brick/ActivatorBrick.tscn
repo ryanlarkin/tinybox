@@ -56,7 +56,7 @@ script = ExtResource("2_rvino")
 
 [node name="model" parent="Smoothing" unique_id=139865635 instance=ExtResource("3_0ykmc")]
 
-[node name="Cube" parent="Smoothing/model" index="0"]
+[node name="Cube" parent="Smoothing/model" index="0" unique_id=1082907886]
 surface_material_override/0 = SubResource("StandardMaterial3D_us10a")
 
 [node name="IntersectDetector" type="Area3D" parent="." unique_id=2090784396]
